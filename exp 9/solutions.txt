@@ -1,0 +1,45 @@
+Name: Mansi Dwivedi
+Roll number: 2019140016
+========================================
+
+
+================
+     TASK 2
+================
+
+1. For each dataset and distance metric, report “average SSE" and “average iterations”. (1.5 marks)
+Answer: 
+
+Dataset     | Average SSE  | Average Iterations
+================================================
+   100.csv  |  8472.63     |    2.44
+  1000.csv  |  34529250.1  |    2.91
+ 10000.csv  | 735138649.961|    3.32
+
+
+2. Run your code on datasets/garden.csv, with different values of k. Looking at the performance plots, does the SSE of k-means algorithm ever increase as the iterations are made? Is your answer the same for both Euclidean and Manhattan distances? (0.5 marks)
+Answer: No, Looking at the performance plots, the SSE of the k-means algorithm never increases as the no of iterations increase. I tested this for k=1,2,4,8. Infact, this should hold for any k, because the algorithm consists of recalculating centroids, which would always result in better SSE with each iteration for a particular value of k. It is a theoretical result that the SSE is least if the point is the centroid of the data set, that's why the SSE keeps decreasing.
+
+3. Look at the files 3lines.png and mouse.png. Manually draw cluster boundaries around the 3 clusters visible in each file (no need to submit the hand drawn clusters). Test the k-means algorithm on the datasets datasets/3lines.csv and datasets/mouse.csv. How does the algorithm’s clustering compare with the clustering you would do by hand? Why do you think this happens? (0.5 marks)
+Answer: For 3lines.csv, the clusters made by the algorithm are very different compared to the clusters drawn by the hand. On looking at the image, we can say there are 3 clusters(vertically distributed points in each cluster), horizontally separated. But the algorithm in most cases makes the top half to be one cluster and distributes the bottom half in the other two, it clubs together parts of the 3 vertical distributions. The reason for this weird clustering is that the points in the distribution are very close horizontally , so even if we do get the desired clusters in some step, in the next step the clusters will be such that the horizontal points in the different vertical distributions will be clubbed together. This occurs because if the topmost point of a distribution belong to one cluster, then the horizontally adjacent points will belong to the same cluster as well because the horizontal separation distance is very less compared to the y-co ordinate range of each distribution. Thus the algo works as expected and clusters together the points of different vertical distributions because they are very close horizontally. 
+
+For mouse.csv, by hand or manually from a qualitative analysis, we can see that there are three clusters, one big cluster in the centre, which lies below the other two smaller clusters. The two smaller clusters are towards the top left and the top right of the big cluster. 
+The k means algorithm performs better this time compared to the 3lines case. It works well because a difference in co ordinates of both the axes gives us some info about the cluster. For example, if a point is in the bottom half, it's more likely to be clustered with the points of the big cluster. Similarly, if it's towards the top then , it's more likely to be clustered with the points in the smaller clusters depending on whether it's towards the left or the right. But note that the clustering isn't very good though. The top left points and the top right points of the big bottom cluster are paired with the top left and top right means respectively because of the distance measures (the points in these areas are more closer to the means of the other two clusters than the big cluster's centre), which make sense mathematically and is to be expected.
+
+
+
+================
+     TASK 3
+================
+
+1. For each dataset, and initialization algorithm, report “average SSE” and "average iterations". (1 mark)
+Answer:
+
+Dataset     |  Initialization | Average SSE  | Average Iterations
+==================================================================
+   100.csv  |        forgy    | 8472.63311469 | 2.43
+   100.csv  |        kmeans++ | 8472.63311469 | 2.0    
+  1000.csv  |        forgy    | 34529250.1    | 2.91   
+  1000.csv  |        kmeans++ | 19887301.0042 | 3.16    
+ 10000.csv  |        forgy    | 735138649.9610| 3.32   
+ 10000.csv  |        kmeans++ | 22323178.8625 | 7.5 
